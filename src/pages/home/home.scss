@@ -1,0 +1,15 @@
+page-home {
+
+    ion-card {
+        background-color: #bbdefb !important;
+    }
+
+    ion-list ion-item.item .nome-distribuidor {
+        color: $danger !important;
+    }
+
+    ion-list ion-item.item p {
+        margin: 8px 0 8px;
+    }
+
+}

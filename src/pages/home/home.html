@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar>
+      <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+      <ion-title>
+      Início
+    </ion-title>
+    <ion-buttons *ngIf="distribuidores" end>
+      <button ion-button icon-only (click)="mostrarPopoverConfiguracoesHome($event)">
+        <ion-icon name="options"></ion-icon>
+      </button>
+    </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content no-padding>
+
+  <progress-bar [progresso]="progresso"></progress-bar>
+
+  <ion-card *ngIf="descricaoEnderecoUsuario">
+    <ion-card-header>
+      <strong>Sua localização atual:</strong>
+    </ion-card-header>
+    <ion-card-content>
+      {{descricaoEnderecoUsuario}}
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="!distribuidores" padding text-center>
+      <ion-spinner></ion-spinner>
+      <p>Carregando lista de distribuidores.</p>
+  </div>
+  
+  <ion-list>
+    <ion-item *ngFor="let distribuidor of distribuidores">
+      <ion-thumbnail item-start>
+        <img src="{{distribuidor.imagemPequena}}">
+      </ion-thumbnail>
+      <h2>
+        <span class="nome-distribuidor">
+            {{distribuidor.nomeFantasia}} 
+        </span>
+        <span *ngIf="distribuidor.avaliacoes">
+          <ion-icon class="icon avaliacoes-distribuidor" name="star"></ion-icon>
+          {{ distribuidor.avaliacoes.total / distribuidor.avaliacoes.quantidade | number:'1.2-2' }}
+        </span>
+      </h2>
+      <p *ngIf="distribuidor.enderecoPrincipal">
+        <ion-icon class="icon distancia-distribuidor" name="locate"></ion-icon>
+        {{distribuidor.enderecoPrincipal.bairro}}
+        {{ "(" + (distribuidor.enderecoPrincipal.getDistancia(geolocalizacaoUsuario) | number:'1.2-2') + "km)" }}
+      </p>
+      <p>
+        <span *ngIf="distribuidor.gasCozinha"><ion-icon class="icon gas-cozinha" name="flame"></ion-icon> Gás de Cozinha</span>
+        <span *ngIf="distribuidor.gasCozinha && distribuidor.aguaMineral">&nbsp;&bull;&nbsp;</span>
+        <span *ngIf="distribuidor.aguaMineral"><ion-icon class="icon agua-mineral" name="water"></ion-icon> Água Mineral</span>
+      </p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

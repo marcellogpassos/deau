@@ -1,0 +1,8 @@
+{
+  "name": "deau",
+  "app_id": "bf2fece0",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
