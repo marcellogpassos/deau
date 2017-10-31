@@ -54,8 +54,10 @@ export class GeocodeProvider {
                     return Observable.throw(this.mapError(body));
             })
             .map(body => {
-                return this.geolocalizacaoConverter
-                    .converterGeolocalizacao(+body.results[0].geometry.location.lat, +body.results[0].geometry.location.lng);
+                return this.geolocalizacaoConverter.convert({
+                    latitude: +body.results[0].geometry.location.lat,
+                    longitude: +body.results[0].geometry.location.lng
+                });
             });
     }
 

@@ -34,7 +34,6 @@ export class HomePage {
   avaliacoesCarregadas: boolean = false;
 
   static NUMERO_TOTAL_ETAPAS: number = 7;
-
   etapasConcluidas: number = 0;
   progresso: number = 0;
 
@@ -181,6 +180,12 @@ export class HomePage {
   atualizarProgresso() {
     this.etapasConcluidas++;
     this.progresso = Math.round((this.etapasConcluidas / HomePage.NUMERO_TOTAL_ETAPAS) * 100) ;
+  }
+
+  detalharDistribuidor(distribuidor: Distribuidor) {
+    this.navCtrl.push("DistribuidorPage", {
+      uid: distribuidor.uid
+    })
   }
 
 }

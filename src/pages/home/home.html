@@ -33,20 +33,20 @@
   </div>
   
   <ion-list>
-    <ion-item *ngFor="let distribuidor of distribuidores">
+    <ion-item *ngFor="let distribuidor of distribuidores" (click)="detalharDistribuidor(distribuidor)">
       <ion-thumbnail item-start>
         <img src="{{distribuidor.imagemPequena}}">
       </ion-thumbnail>
-      <h2>
+      <h2 text-right>
         <span class="nome-distribuidor">
             {{distribuidor.nomeFantasia}} 
         </span>
-        <span *ngIf="distribuidor.avaliacoes">
-          <ion-icon class="icon avaliacoes-distribuidor" name="star"></ion-icon>
-          {{ distribuidor.avaliacoes.total / distribuidor.avaliacoes.quantidade | number:'1.2-2' }}
-        </span>
+        <ion-badge class="avaliacoes-distribuidor" item-end *ngIf="distribuidor.avaliacoes" color="secondary">
+            <ion-icon class="icon avaliacoes-distribuidor" name="star"></ion-icon>
+            {{ distribuidor.avaliacoes.total / distribuidor.avaliacoes.quantidade | number:'1.2-2' }}
+        </ion-badge>
       </h2>
-      <p *ngIf="distribuidor.enderecoPrincipal">
+      <p *ngIf="distribuidor.enderecoPrincipal" text-wrap>
         <ion-icon class="icon distancia-distribuidor" name="locate"></ion-icon>
         {{distribuidor.enderecoPrincipal.bairro}}
         {{ "(" + (distribuidor.enderecoPrincipal.getDistancia(geolocalizacaoUsuario) | number:'1.2-2') + "km)" }}

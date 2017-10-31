@@ -4,11 +4,16 @@ page-home {
         background-color: #bbdefb !important;
     }
 
-    ion-list ion-item.item .nome-distribuidor {
+    ion-list .item .nome-distribuidor {
         color: $danger !important;
+        float: left;
     }
 
-    ion-list ion-item.item p {
+    ion-list .item .avaliacoes-distribuidor {
+        margin: 0;
+    }
+
+    ion-list .item p {
         margin: 8px 0 8px;
     }
 

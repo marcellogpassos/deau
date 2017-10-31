@@ -9,7 +9,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AuthProvider } from '../providers/auth/auth';
-import { DistribuidoresProvider } from '../providers/distribuidores/distribuidores';
 import { MsgProvider } from '../providers/msg/msg';
 
 @NgModule({

@@ -20,7 +20,10 @@ export class GeolocalizacaoProvider {
 
   getGeolocalizacao(): Promise<Geolocalizacao> {
     return this.geolocationCtrl.getCurrentPosition()
-      .then(resp => this.geolocalizacaoConverter.converterGeolocalizacao(resp.coords.latitude, resp.coords.longitude));
+      .then(resp => this.geolocalizacaoConverter.convert({
+        latitude: resp.coords.latitude,
+        longitude: resp.coords.longitude
+      }));
   }
 
 }

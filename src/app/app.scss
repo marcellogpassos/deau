@@ -44,3 +44,11 @@ ion-menu ion-content .item .icon {
         padding-left: 8px;
         padding-right: 8px;
     }
+
+.card {
+    background-color: $light;
+}
+
+    .card .card-title {
+        color: $danger;
+    }

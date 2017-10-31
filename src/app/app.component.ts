@@ -50,6 +50,7 @@ export class MyApp {
   checkAuthentication() {
     this.authProvider.getAuth()
       .onAuthStateChanged(user => {
+        this.nav.setRoot(this.rootPage);
         this.usuarioAutenticado = (user != null);
       });
   }

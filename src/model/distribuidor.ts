@@ -14,6 +14,7 @@ export class Distribuidor extends Contatos {
 
     imagemPequena: string;
     imagemGrande: string;
+    imagemGrandeUrl: string;
 
     avaliacoes: AvaliacoesDistribuidor;
 

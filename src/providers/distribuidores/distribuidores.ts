@@ -27,22 +27,26 @@ export class DistribuidoresProvider {
 
   listarDistribuidores(): Promise<Distribuidor[]> {
     return firebase.database().ref("/distribuidores").once("value")
-      .then(snapshot => this.distribuidorConverter.converterListaDistribuidores(snapshot.val()));
+      .then(snapshot => this.distribuidorConverter.convertList(snapshot.val()));
   }
 
   getDistribuidor(uid: string): Promise<Distribuidor> {
     return firebase.database().ref("/distribuidores/" + uid).once("value")
-      .then(snapshot => this.distribuidorConverter.converterDistribuidor(uid, snapshot.val()));
+      .then(snapshot => this.distribuidorConverter.convert(snapshot.val(), uid));
   }
 
   getEnderecoDistribuidor(distribuidor: Distribuidor): Promise<Endereco> {
     return firebase.database().ref("/enderecoDistribuidor/" + distribuidor.uid).once("value")
-      .then(snapshot => this.enderecoConverter.converterEndereco(snapshot.val()));
+      .then(snapshot => this.enderecoConverter.convert(snapshot.val()));
   }
 
   getAvaliacoesDistribuidor(distribuidor: Distribuidor): Promise<AvaliacoesDistribuidor> {
     return firebase.database().ref("/avaliacoesDistribuidor/" + distribuidor.uid).once("value")
-      .then(snapshot => this.avaliacoesDistribuidorConverter.converterAvaliacoesDistribuidor(snapshot.val()));
+      .then(snapshot => this.avaliacoesDistribuidorConverter.convert(snapshot.val()));
+  }
+
+  getImagemGrandeDistribuidor(distribuidor: Distribuidor): Promise<string> {
+    return firebase.storage().ref(distribuidor.imagemGrande).getDownloadURL();
   }
 
 }

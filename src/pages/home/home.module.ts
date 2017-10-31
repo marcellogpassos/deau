@@ -19,7 +19,6 @@ import { GeocodeProvider } from '../../providers/geocode/geocode';
 import { ProgressBarComponent } from '../../components/progress-bar/progress-bar';
 import { ProgressBarComponentModule } from '../../components/progress-bar/progress-bar.module';
 
-
 @NgModule({
   declarations: [
     HomePage,
@@ -41,7 +40,7 @@ import { ProgressBarComponentModule } from '../../components/progress-bar/progre
   imports: [
     IonicPageModule.forChild(HomePage),
     PopoverConfiguracoesHomeComponentModule,
-    ProgressBarComponentModule
+    ProgressBarComponentModule,
   ],
 })
 export class HomePageModule {}

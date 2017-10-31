@@ -1,22 +1,16 @@
 import { Injectable } from "@angular/core";
 
 import { Distribuidor } from "../model/distribuidor";
+import { Converter } from "./converter";
 
 @Injectable()
-export class DistribuidorConverter {
+export class DistribuidorConverter implements Converter<Distribuidor> {
 
     constructor() {
         
     }
 
-    converterListaDistribuidores(dados: any): Distribuidor[] {
-        let distribuidores: Distribuidor[] = [];
-        let keys = Object.keys(dados);
-        keys.forEach(uid => distribuidores.push(this.converterDistribuidor(uid, dados[uid])));
-        return distribuidores;
-    }
-
-    converterDistribuidor(uid: string, dados: any): Distribuidor {
+    convert(dados: any, uid?: string): Distribuidor {
         let distribuidor: Distribuidor = new Distribuidor();
         distribuidor.uid = uid;
         distribuidor.nomeFantasia = dados.nomeFantasia;
@@ -31,6 +25,13 @@ export class DistribuidorConverter {
         distribuidor.gasCozinha = dados.gasCozinha;
         distribuidor.aguaMineral = dados.aguaMineral;
         return distribuidor;
+    }
+
+    convertList(dados: any): Distribuidor[] {
+        let distribuidores: Distribuidor[] = [];
+        let keys = Object.keys(dados);
+        keys.forEach(uid => distribuidores.push(this.convert(dados[uid], uid)));
+        return distribuidores;
     }
 
 }

@@ -1,0 +1,76 @@
+<!--
+  Generated template for the DistribuidorPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Distribuidor</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content no-padding>
+
+  <progress-bar [progresso]="progresso"></progress-bar>
+
+  <div *ngIf="!distribuidor" padding text-center>
+      <ion-spinner></ion-spinner>
+      <p>Carregando dados do distribuidor.</p>
+  </div>  
+
+  <ion-card *ngIf="distribuidor">
+    <img [hidden]="!imagemCarregada" src="{{distribuidor.imagemGrandeUrl}}" (load)="notificarImagemCarregada()">
+    <img [hidden]="imagemCarregada" src="{{'assets/img/placeholder.png'}}">
+    <ion-card-content>
+      <ion-card-title text-right no-padding>
+        <span class="nome">
+            {{ distribuidor.nomeFantasia }}
+        </span>
+        <ion-badge item-end *ngIf="distribuidor.avaliacoes" color="secondary">
+            <ion-icon class="icon avaliacoes-distribuidor" name="star"></ion-icon>
+            {{ distribuidor.avaliacoes.total / distribuidor.avaliacoes.quantidade | number:'1.2-2' }}
+        </ion-badge>
+      </ion-card-title>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="distribuidor">
+    <ion-item>
+      <h2>CNPJ:</h2>
+      <p>{{ distribuidor.cnpj | cnpj }}</p>
+    </ion-item>
+    <ion-item>
+      <h2>Razão Social:</h2>
+      <p>{{ distribuidor.razaoSocial }}</p>
+    </ion-item>
+    <ion-item>
+      <h2>Endereço:</h2>
+      <p *ngIf="distribuidor.enderecoPrincipal" text-wrap>
+        {{ distribuidor.enderecoPrincipal | endereco }}
+      </p>
+      <p *ngIf="!distribuidor.enderecoPrincipal">
+        Carregando endereço...
+      </p>
+    </ion-item>
+    <ion-item>
+      <h2>Telefone:</h2>
+      <p>{{ distribuidor.telefone | telefone }}</p>
+    </ion-item>
+    <ion-item>
+      <h2>Produtos:</h2>
+      <p>
+        <span *ngIf="distribuidor.gasCozinha">Gás de Cozinha</span>
+        <span *ngIf="distribuidor.gasCozinha && distribuidor.aguaMineral">/</span>
+        <span *ngIf="distribuidor.aguaMineral">Água Mineral</span>
+      </p>
+    </ion-item>
+    <ion-item>
+      <h2>Formas de Pagamento:</h2>
+      <p>Dinheiro / Débito / Crédito</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
