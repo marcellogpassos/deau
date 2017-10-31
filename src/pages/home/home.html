@@ -60,7 +60,7 @@
         </span>
         <ion-badge class="avaliacoes-distribuidor" item-end *ngIf="distribuidor.avaliacoes" color="secondary">
             <ion-icon class="icon avaliacoes-distribuidor" name="star"></ion-icon>
-            {{ distribuidor.avaliacoes.total / distribuidor.avaliacoes.quantidade | number:'1.2-2' }}
+            {{ distribuidor.avaliacoes | mediaAvaliacoes }}
         </ion-badge>
       </h2>
       <p *ngIf="distribuidor.enderecoPrincipal" text-wrap>

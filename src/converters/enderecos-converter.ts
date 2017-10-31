@@ -21,8 +21,4 @@ export class EnderecosConverter implements Converter<Endereco> {
         return endereco;
     }
 
-    convertList(dados: any): Endereco[] {
-        throw new Error("Method not implemented.");
-    }
-
 }

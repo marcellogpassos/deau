@@ -3,6 +3,7 @@ import { CnpjPipe } from './cnpj/cnpj';
 import { TelefonePipe } from './telefone/telefone';
 import { EnderecoPipe } from './endereco/endereco';
 import { CepPipe } from './cep/cep';
+import { MediaAvaliacoesPipe } from './media-avaliacoes/media-avaliacoes';
 
 @NgModule({
 	declarations: [
@@ -10,6 +11,7 @@ import { CepPipe } from './cep/cep';
         TelefonePipe,
         EnderecoPipe,
         CepPipe,
+        MediaAvaliacoesPipe,
     ],
 	imports: [],
 	exports: [
@@ -17,6 +19,7 @@ import { CepPipe } from './cep/cep';
         TelefonePipe,
         EnderecoPipe,
         CepPipe,
+        MediaAvaliacoesPipe,
     ]
 })
 export class PipesModule {}

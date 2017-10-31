@@ -11,6 +11,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AuthProvider } from '../providers/auth/auth';
 import { MsgProvider } from '../providers/msg/msg';
+import { ComentariosProvider } from '../providers/comentarios/comentarios';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MsgProvider } from '../providers/msg/msg';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     MsgProvider,
-    Storage
+    Storage,
+    ComentariosProvider
   ]
 })
 export class AppModule {}

@@ -31,15 +31,15 @@ export class FavoritosProvider {
 
   unsetFavorito(distribuidor: Distribuidor): Promise<any> {
     return this.listarFavoritos()
-    .then((favoritos: string[]) => {
-      if (favoritos) {
-        favoritos.splice(favoritos.indexOf(distribuidor.uid), 1);
-        if (favoritos.length)
-          return this.storage.set("favoritos", favoritos);
-        else
-          return this.storage.remove("favoritos");
-      }
-    });
+      .then((favoritos: string[]) => {
+        if (favoritos) {
+          favoritos.splice(favoritos.indexOf(distribuidor.uid), 1);
+          if (favoritos.length)
+            return this.storage.set("favoritos", favoritos);
+          else
+            return this.storage.remove("favoritos");
+        }
+      });
   }
 
   listarFavoritos(): Promise<string[]> {

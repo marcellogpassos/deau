@@ -13,8 +13,4 @@ export class AvaliacoesDistribuidorConverter implements Converter<AvaliacoesDist
         return avaliacoes;
     }
 
-    convertList(dados: any): AvaliacoesDistribuidor[] {
-        throw new Error("Method not implemented.");
-    }
-
 }

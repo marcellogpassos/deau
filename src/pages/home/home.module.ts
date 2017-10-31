@@ -18,6 +18,7 @@ import { GeolocalizacaoConverter } from '../../converters/geolocalizacao-convert
 import { GeocodeProvider } from '../../providers/geocode/geocode';
 import { ProgressBarComponent } from '../../components/progress-bar/progress-bar';
 import { ProgressBarComponentModule } from '../../components/progress-bar/progress-bar.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ProgressBarComponentModule } from '../../components/progress-bar/progre
   ],
   imports: [
     IonicPageModule.forChild(HomePage),
+    PipesModule,
     PopoverConfiguracoesHomeComponentModule,
     ProgressBarComponentModule,
   ],

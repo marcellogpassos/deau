@@ -19,7 +19,7 @@ import { FavoritosProvider } from '../../providers/favoritos/favoritos';
 })
 export class DistribuidorPage {
 
-  uid: string = "92a9c917-cdbd-4c6e-aec6-d18287364d7c";
+  uid: string; // = "92a9c917-cdbd-4c6e-aec6-d18287364d7c";
   distribuidor: Distribuidor;
 
   usuarioAutenticado: boolean;
@@ -112,6 +112,12 @@ export class DistribuidorPage {
     if (this.favorito)
       this.favoritosProvider.unsetFavorito(this.distribuidor)
         .then(value => this.favorito = false);
+  }
+
+  abrirComentarios() {
+    this.navCtrl.push("ComentariosDistribuidorPage", {
+      distribuidor: this.distribuidor
+    });
   }
 
 }
