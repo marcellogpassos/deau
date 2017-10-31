@@ -20,7 +20,9 @@ export class FavoritosProvider {
   setFavorito(distribuidor: Distribuidor): Promise<any> {
     return this.listarFavoritos()
       .then((favoritos: string[]) => {
-        if (!this.procurar(distribuidor, favoritos)) {
+        if (!favoritos)
+          return this.storage.set("favoritos", [distribuidor.uid]);
+        else if (!this.procurar(distribuidor, favoritos)) {
           favoritos.push(distribuidor.uid);
           return this.storage.set("favoritos", favoritos);
         }
@@ -30,8 +32,13 @@ export class FavoritosProvider {
   unsetFavorito(distribuidor: Distribuidor): Promise<any> {
     return this.listarFavoritos()
     .then((favoritos: string[]) => {
-      favoritos.splice(favoritos.indexOf(distribuidor.uid), 1);
-      return this.storage.set("favoritos", favoritos);
+      if (favoritos) {
+        favoritos.splice(favoritos.indexOf(distribuidor.uid), 1);
+        if (favoritos.length)
+          return this.storage.set("favoritos", favoritos);
+        else
+          return this.storage.remove("favoritos");
+      }
     });
   }
 
@@ -45,7 +52,10 @@ export class FavoritosProvider {
   }
 
   procurar(distribuidor: Distribuidor, favoritos: string[]): string {
-    return favoritos.find(uid => (uid == distribuidor.uid));
+    if (favoritos)
+      return favoritos.find(uid => (uid == distribuidor.uid));
+    else
+      return null;
   }
 
 }

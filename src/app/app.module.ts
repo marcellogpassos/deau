@@ -19,7 +19,10 @@ import { MsgProvider } from '../providers/msg/msg';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot({
+      name: 'deau_db',
+      driverOrder: ['indexeddb', 'sqlite', 'websql']
+    }),
     HttpModule,
   ],
   bootstrap: [IonicApp],
