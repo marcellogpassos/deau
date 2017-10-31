@@ -20,7 +20,7 @@ import { PopoverConfiguracoesHomeComponent } from '../../components/popover-conf
 @IonicPage()
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
 })
 export class HomePage {
 
@@ -33,9 +33,13 @@ export class HomePage {
   enderecosCarregados: boolean = false;
   avaliacoesCarregadas: boolean = false;
 
+  stringBusca: string;
+  mostrarCampoBusca: boolean;
+
   static NUMERO_TOTAL_ETAPAS: number = 7;
   etapasConcluidas: number = 0;
-  progresso: number = 0;
+
+  self = HomePage;
 
   constructor(public navCtrl: NavController, public loadContrl: LoadingController,
     public popoverCtrl: PopoverController, public alertCtrl: AlertController,
@@ -51,10 +55,10 @@ export class HomePage {
       .then(geolocalizacao => {
         this.geolocalizacaoUsuario = geolocalizacao;
         this.initDescricaoEndereco();
-        this.atualizarProgresso();
+        this.etapasConcluidas++;
       }, error => {
         console.log(error);
-        this.atualizarProgresso();
+        this.etapasConcluidas++;
       });
   }
 
@@ -62,10 +66,10 @@ export class HomePage {
     this.geocodeProvider.getDescricaoEndereco(this.geolocalizacaoUsuario)
       .subscribe(descricaoEndereco => {
         this.descricaoEnderecoUsuario = descricaoEndereco;
-        this.atualizarProgresso();
+        this.etapasConcluidas++;
       }, error => {
         console.log(error)
-        this.atualizarProgresso();
+        this.etapasConcluidas++;
       })
   }
 
@@ -78,10 +82,10 @@ export class HomePage {
         this.distribuidores = distribuidores;
         this.initAvaliacoesDistribuidores();
         this.initEnderecosDistribuidores();
-        this.atualizarProgresso();
+        this.etapasConcluidas++;
       }, error => {
         console.log(error);
-        this.atualizarProgresso();
+        this.etapasConcluidas++;
       });
   }
 
@@ -102,7 +106,7 @@ export class HomePage {
       .then(values => {
         this.ordenarDistribuidoresPelaDistancia();
         this.enderecosCarregados = true;
-        this.atualizarProgresso();
+        this.etapasConcluidas++;
       }, error => {
         console.log(error);
       });
@@ -115,7 +119,7 @@ export class HomePage {
       let promise: Promise<AvaliacoesDistribuidor> = this.distribuidoresProvider.getAvaliacoesDistribuidor(distribuidor);
       promise.then(avaliacoes => {
           distribuidor.avaliacoes = avaliacoes;
-          this.atualizarProgresso();
+          this.etapasConcluidas++;
         }, error => {
           console.log(error);
         });
@@ -135,7 +139,7 @@ export class HomePage {
     if (this.enderecosCarregados && this.geolocalizacaoUsuario)
       this.distribuidores
         .sort((a, b) => a.enderecoPrincipal.getDistancia(this.geolocalizacaoUsuario) - b.enderecoPrincipal.getDistancia(this.geolocalizacaoUsuario));
-        this.atualizarProgresso();
+        this.etapasConcluidas++;
   }
 
   ordenarDistribuidoresPelasAvaliacoes() {
@@ -177,9 +181,18 @@ export class HomePage {
     });
   }
 
-  atualizarProgresso() {
-    this.etapasConcluidas++;
-    this.progresso = Math.round((this.etapasConcluidas / HomePage.NUMERO_TOTAL_ETAPAS) * 100) ;
+  getDistribuidores(): Distribuidor[] {
+    if (this.stringBusca && this.stringBusca.trim() != '') 
+      return this.distribuidores.filter((item) => {
+        return (item.nomeFantasia.toLowerCase().indexOf(this.stringBusca.toLowerCase()) > -1);
+      });
+    return this.distribuidores;   
+  }
+
+  alternarMostrarCampoBusca(event) {
+    this.mostrarCampoBusca = !this.mostrarCampoBusca;
+    if (!this.mostrarCampoBusca)
+      this.stringBusca = "";
   }
 
   detalharDistribuidor(distribuidor: Distribuidor) {

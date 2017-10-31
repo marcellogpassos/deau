@@ -14,7 +14,7 @@
 
 <ion-content no-padding>
 
-  <progress-bar [progresso]="progresso"></progress-bar>
+  <progress-bar [etapasConcluidas]="etapasConcluidas" [numeroTotalEtapas]="self.NUMERO_TOTAL_ETAPAS"></progress-bar>
 
   <div *ngIf="!distribuidor" padding text-center>
       <ion-spinner></ion-spinner>
@@ -37,15 +37,10 @@
     </ion-card-content>
   </ion-card>
 
+  <button *ngIf="distribuidor && (favorito != null)" class="favorito" ion-fab bottom right (click)="alternarFavorito()">
+      <ion-icon name="{{favorito ? 'star' : 'star-outline'}}"></ion-icon></button>
+
   <ion-list *ngIf="distribuidor">
-    <ion-item>
-      <h2>CNPJ:</h2>
-      <p>{{ distribuidor.cnpj | cnpj }}</p>
-    </ion-item>
-    <ion-item>
-      <h2>Razão Social:</h2>
-      <p>{{ distribuidor.razaoSocial }}</p>
-    </ion-item>
     <ion-item>
       <h2>Endereço:</h2>
       <p *ngIf="distribuidor.enderecoPrincipal" text-wrap>
@@ -70,6 +65,14 @@
     <ion-item>
       <h2>Formas de Pagamento:</h2>
       <p>Dinheiro / Débito / Crédito</p>
+    </ion-item>
+    <ion-item>
+      <h2>CNPJ:</h2>
+      <p>{{ distribuidor.cnpj | cnpj }}</p>
+    </ion-item>
+    <ion-item>
+      <h2>Razão Social:</h2>
+      <p>{{ distribuidor.razaoSocial }}</p>
     </ion-item>
   </ion-list>
 

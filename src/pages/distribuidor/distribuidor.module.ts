@@ -7,6 +7,7 @@ import { EnderecosConverter } from '../../converters/enderecos-converter';
 import { AvaliacoesDistribuidorConverter } from '../../converters/avaliacoes-distribuidor-converter';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ProgressBarComponentModule } from '../../components/progress-bar/progress-bar.module';
+import { FavoritosProvider } from '../../providers/favoritos/favoritos';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ProgressBarComponentModule } from '../../components/progress-bar/progre
     DistribuidorConverter,
     EnderecosConverter,
     DistribuidoresProvider,
+    FavoritosProvider,
   ],
   imports: [
     IonicPageModule.forChild(DistribuidorPage),

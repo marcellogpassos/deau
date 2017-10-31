@@ -12,7 +12,7 @@ import { IonicPage } from 'ionic-angular';
   selector: 'progress-bar',
   template: `
     <div class="total">
-      <div class="progresso" color="primary" [ngStyle]="{'width': progresso + '%'}">
+      <div class="progresso" color="primary" [ngStyle]="{'width': getProgresso() + '%'}">
       </div>
     </div>`,
   styles: [
@@ -23,9 +23,15 @@ import { IonicPage } from 'ionic-angular';
 export class ProgressBarComponent {
 
   @Input()
-  progresso;
+  etapasConcluidas: number;
+  @Input()
+  numeroTotalEtapas: number;
 
   constructor() {
+  }
+
+  getProgresso() {
+    return Math.round((this.etapasConcluidas / this.numeroTotalEtapas) * 100) ;
   }
 
 }

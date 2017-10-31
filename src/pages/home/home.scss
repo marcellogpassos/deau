@@ -17,4 +17,10 @@ page-home {
         margin: 8px 0 8px;
     }
 
+    .searchbar-transition {
+        -webkit-transition: width 1s;
+        -moz-transition: width 1s;
+        transition: width 1s;
+    }
+
 }

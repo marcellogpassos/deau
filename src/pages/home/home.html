@@ -1,22 +1,37 @@
 <ion-header>
   <ion-navbar>
-      <button ion-button icon-only menuToggle>
+
+    <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-      <ion-title>
+
+    <ion-title *ngIf="!mostrarCampoBusca">
       Início
     </ion-title>
+
+    <ion-searchbar
+      [ngClass]="{'searchbar-transition': mostrarCampoBusca}"
+      [hidden]="!mostrarCampoBusca"
+      [(ngModel)]="stringBusca"
+      placeholder="Buscar distribuidor">
+    </ion-searchbar>
+
     <ion-buttons *ngIf="distribuidores" end>
+      <button ion-button icon-only (click)="alternarMostrarCampoBusca($event)">
+        <ion-icon *ngIf="!mostrarCampoBusca" name="search"></ion-icon>
+        <ion-icon *ngIf="mostrarCampoBusca" name="close"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="mostrarPopoverConfiguracoesHome($event)">
         <ion-icon name="options"></ion-icon>
       </button>
     </ion-buttons>
+
     </ion-navbar>
 </ion-header>
 
 <ion-content no-padding>
 
-  <progress-bar [progresso]="progresso"></progress-bar>
+  <progress-bar [etapasConcluidas]="etapasConcluidas" [numeroTotalEtapas]="self.NUMERO_TOTAL_ETAPAS"></progress-bar>
 
   <ion-card *ngIf="descricaoEnderecoUsuario">
     <ion-card-header>
@@ -27,13 +42,15 @@
     </ion-card-content>
   </ion-card>
 
+  
+
   <div *ngIf="!distribuidores" padding text-center>
       <ion-spinner></ion-spinner>
       <p>Carregando lista de distribuidores.</p>
   </div>
   
   <ion-list>
-    <ion-item *ngFor="let distribuidor of distribuidores" (click)="detalharDistribuidor(distribuidor)">
+    <ion-item *ngFor="let distribuidor of getDistribuidores()" (click)="detalharDistribuidor(distribuidor)">
       <ion-thumbnail item-start>
         <img src="{{distribuidor.imagemPequena}}">
       </ion-thumbnail>

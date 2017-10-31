@@ -52,3 +52,13 @@ ion-menu ion-content .item .icon {
     .card .card-title {
         color: $danger;
     }
+
+.fab.favorito  {
+    background-color: $secondary !important;
+    color: $danger !important;
+    float: right;
+    position: absolute;
+    z-index: 999;
+    right: 16px;
+    top: 24px;
+}

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicStorageModule } from '@ionic/storage';
 import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
@@ -18,6 +19,7 @@ import { MsgProvider } from '../providers/msg/msg';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     HttpModule,
   ],
   bootstrap: [IonicApp],
@@ -30,6 +32,7 @@ import { MsgProvider } from '../providers/msg/msg';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     MsgProvider,
+    Storage
   ]
 })
 export class AppModule {}
