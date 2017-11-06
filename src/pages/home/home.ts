@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, IonicPage, PopoverController, AlertController } from 'ionic-angular';
 
-import { Observable } from "rxjs/Rx";
-
 import { Distribuidor } from '../../model/distribuidor';
 import { Geolocalizacao } from '../../model/geolocalizacao';
 import { Usuario } from '../../model/usuario';
@@ -41,36 +39,36 @@ export class HomePage {
 
   self = HomePage;
 
-  constructor(public navCtrl: NavController, public loadContrl: LoadingController,
-    public popoverCtrl: PopoverController, public alertCtrl: AlertController,
-    public authProvider: AuthProvider, public distribuidoresProvider: DistribuidoresProvider,
-    public usuariosProvider: UsuariosProvider, public endercosProvider: EnderecosProvider,
-    public geolocalizacaoProvider: GeolocalizacaoProvider, public geocodeProvider: GeocodeProvider) {
+  constructor(public alertCtrl: AlertController, public authProvider: AuthProvider,
+    public distribuidoresProvider: DistribuidoresProvider, public endercosProvider: EnderecosProvider,
+    public geocodeProvider: GeocodeProvider, public geolocalizacaoProvider: GeolocalizacaoProvider,
+    public loadContrl: LoadingController, public navCtrl: NavController,
+    public popoverCtrl: PopoverController, public usuariosProvider: UsuariosProvider) {
     this.initGeolocalizacao();
     this.initDistribuidores();
   }
 
   initGeolocalizacao() {
     this.geolocalizacaoProvider.getGeolocalizacao()
-      .then(geolocalizacao => {
-        this.geolocalizacaoUsuario = geolocalizacao;
-        this.initDescricaoEndereco();
-        this.etapasConcluidas++;
-      }, error => {
-        console.log(error);
-        this.etapasConcluidas++;
-      });
+    .then(geolocalizacao => {
+      this.geolocalizacaoUsuario = geolocalizacao;
+      this.initDescricaoEndereco();
+      this.etapasConcluidas++;
+    }, error => {
+      console.log(error);
+      this.etapasConcluidas++;
+    });
   }
 
   initDescricaoEndereco() {
     this.geocodeProvider.getDescricaoEndereco(this.geolocalizacaoUsuario)
-      .subscribe(descricaoEndereco => {
-        this.descricaoEnderecoUsuario = descricaoEndereco;
-        this.etapasConcluidas++;
-      }, error => {
-        console.log(error)
-        this.etapasConcluidas++;
-      })
+    .subscribe(descricaoEndereco => {
+      this.descricaoEnderecoUsuario = descricaoEndereco;
+      this.etapasConcluidas++;
+    }, error => {
+      console.log(error)
+      this.etapasConcluidas++;
+    })
   }
 
   initDistribuidores() {
@@ -78,15 +76,15 @@ export class HomePage {
     this.avaliacoesCarregadas = false;
 
     this.distribuidoresProvider.listarDistribuidores()
-      .then(distribuidores => {
-        this.distribuidores = distribuidores;
-        this.initAvaliacoesDistribuidores();
-        this.initEnderecosDistribuidores();
-        this.etapasConcluidas++;
-      }, error => {
-        console.log(error);
-        this.etapasConcluidas++;
-      });
+    .then(distribuidores => {
+      this.distribuidores = distribuidores;
+      this.initAvaliacoesDistribuidores();
+      this.initEnderecosDistribuidores();
+      this.etapasConcluidas++;
+    }, error => {
+      console.log(error);
+      this.etapasConcluidas++;
+    });
   }
 
   initEnderecosDistribuidores() {
@@ -95,21 +93,21 @@ export class HomePage {
     this.distribuidores.forEach(distribuidor => {
       let promise: Promise<Endereco> = this.distribuidoresProvider.getEnderecoDistribuidor(distribuidor);
       promise.then(endereco => {
-          distribuidor.enderecoPrincipal = endereco;
-        }, error => {
-          console.log(error);
-        });
+        distribuidor.enderecoPrincipal = endereco;
+      }, error => {
+        console.log(error);
+      });
       promises.push(promise);
     });
 
     Promise.all(promises)
-      .then(values => {
-        this.ordenarDistribuidoresPelaDistancia();
-        this.enderecosCarregados = true;
-        this.etapasConcluidas++;
-      }, error => {
-        console.log(error);
-      });
+    .then(values => {
+      this.ordenarDistribuidoresPelaDistancia();
+      this.enderecosCarregados = true;
+      this.etapasConcluidas++;
+    }, error => {
+      console.log(error);
+    });
   }
 
   initAvaliacoesDistribuidores() {
@@ -118,39 +116,39 @@ export class HomePage {
     this.distribuidores.forEach(distribuidor => {
       let promise: Promise<AvaliacoesDistribuidor> = this.distribuidoresProvider.getAvaliacoesDistribuidor(distribuidor);
       promise.then(avaliacoes => {
-          distribuidor.avaliacoes = avaliacoes;
-          this.etapasConcluidas++;
-        }, error => {
-          console.log(error);
-        });
+        distribuidor.avaliacoes = avaliacoes;
+        this.etapasConcluidas++;
+      }, error => {
+        console.log(error);
+      });
       promises.push(promise);
     });
 
     Promise.all(promises)
-      .then(values => {
-        // this.ordenarDistribuidoresPelasAvaliacoes();
-        this.avaliacoesCarregadas = true;
-      }, error => {
-        console.log(error);
-      });
+    .then(values => {
+      // this.ordenarDistribuidoresPelasAvaliacoes();
+      this.avaliacoesCarregadas = true;
+    }, error => {
+      console.log(error);
+    });
   }
 
   ordenarDistribuidoresPelaDistancia() {
     if (this.enderecosCarregados && this.geolocalizacaoUsuario)
       this.distribuidores
-        .sort((a, b) => a.enderecoPrincipal.getDistancia(this.geolocalizacaoUsuario) - b.enderecoPrincipal.getDistancia(this.geolocalizacaoUsuario));
-        this.etapasConcluidas++;
+    .sort((a, b) => a.enderecoPrincipal.getDistancia(this.geolocalizacaoUsuario) - b.enderecoPrincipal.getDistancia(this.geolocalizacaoUsuario));
+    this.etapasConcluidas++;
   }
 
   ordenarDistribuidoresPelasAvaliacoes() {
     if (this.avaliacoesCarregadas)
       this.distribuidores
-        .sort((a, b) => b.avaliacoes.getMedia() - a.avaliacoes.getMedia());
+    .sort((a, b) => b.avaliacoes.getMedia() - a.avaliacoes.getMedia());
   }
 
   ordenarDistribuidoresPorOrdemAlfabetica() {
     this.distribuidores
-      .sort((a, b) => a.nomeFantasia.localeCompare(b.nomeFantasia));
+    .sort((a, b) => a.nomeFantasia.localeCompare(b.nomeFantasia));
   }
 
   mostrarPopoverConfiguracoesHome(event) {

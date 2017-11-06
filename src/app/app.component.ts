@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import firebase from 'firebase';
 import { AuthProvider } from '../providers/auth/auth';
+import { MunicipioPadraoProvider } from '../providers/municipio-padrao/municipio-padrao';
+import { Municipio } from '../model/municipio';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +20,7 @@ export class MyApp {
   pages: Array<{code: number, icon: string, title: string, component: any, auth: boolean, guest: boolean}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-    public authProvider: AuthProvider) {
+    public authProvider: AuthProvider, public municipioPadraoProvider: MunicipioPadraoProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -37,6 +39,7 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.checkMunicipioPadrao();
       this.initFirebaseApp();
       this.checkAuthentication();
 
@@ -52,6 +55,14 @@ export class MyApp {
       .onAuthStateChanged(user => {
         this.nav.setRoot(this.rootPage);
         this.usuarioAutenticado = (user != null);
+      });
+  }
+
+  checkMunicipioPadrao() {
+    this.municipioPadraoProvider.recuperarMunicipioPadrao()
+      .then((municipio: Municipio) => {
+        if (!municipio)
+          this.nav.setRoot("MunicipioPadraoPage");
       });
   }
 

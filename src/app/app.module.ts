@@ -12,6 +12,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import { MsgProvider } from '../providers/msg/msg';
 import { ComentariosProvider } from '../providers/comentarios/comentarios';
+import { MunicipioPadraoProvider } from '../providers/municipio-padrao/municipio-padrao';
+import { MunicipioConverter } from '../converters/municipio-converter';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { ComentariosProvider } from '../providers/comentarios/comentarios';
     AuthProvider,
     MsgProvider,
     Storage,
-    ComentariosProvider
+    ComentariosProvider,
+    MunicipioPadraoProvider,
+    MunicipioConverter,    
   ]
 })
 export class AppModule {}
